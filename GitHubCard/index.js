@@ -9,17 +9,13 @@
 
       
 
+      
       axios.get("https://api.github.com/users/Hail91")
       .then(res => {
         const myCard = gitInfo(res);
         const newCard = document.querySelector('.cards');
         newCard.appendChild(myCard);
       });
-
-      
-
-
-
 
       //Functional component
 
@@ -63,7 +59,8 @@
       userName.textContent = createCard.data.name;
       userID.textContent = createCard.data.login;
       userLoc.textContent = `Location: ${createCard.data.location}`;
-      userPage.textContent = `Profile: ${createCard.data.html_url}`;
+      userPage.href = createCard.data.html_url;
+      userPage.textContent = createCard.data.html_url;
       userFollowers.textContent = `Followers: ${createCard.data.followers}`;
       userFollowing.textContent = `Following: ${createCard.data.following}`;
       userBio.textContent = ` Bio: ${createCard.data.bio}`;
