@@ -9,7 +9,6 @@
 
       
 
-
       axios.get("https://api.github.com/users/Hail91")
       .then(res => {
         const myCard = gitInfo(res);
@@ -48,28 +47,26 @@
       userID.classList.add('username');
 
       // Append elements
-
       card.appendChild(userImg);
       card.appendChild(cardData);
       cardData.appendChild(userName);
       cardData.appendChild(userID);
       cardData.appendChild(userLoc);
       cardData.appendChild(userProf);
-      cardData.appendChild(userPage);
+      userProf.appendChild(userPage);
       cardData.appendChild(userFollowers);
       cardData.appendChild(userFollowing);
       cardData.appendChild(userBio);
 
-      // Adding Content 
-
+      // Adding Content
       userImg.src = createCard.data.avatar_url;
       userName.textContent = createCard.data.name;
       userID.textContent = createCard.data.login;
-      userLoc.textContent = createCard.data.location;
-      userPage.textContent = createCard.data.html_url;
+      userLoc.textContent = `Location: ${createCard.data.location}`;
+      userPage.textContent = `Profile: ${createCard.data.html_url}`;
       userFollowers.textContent = `Followers: ${createCard.data.followers}`;
       userFollowing.textContent = `Following: ${createCard.data.following}`;
-      userBio.textContent = createCard.data.bio;
+      userBio.textContent = ` Bio: ${createCard.data.bio}`;
 
       return card;
     }
@@ -95,12 +92,20 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
-  axios.get("https://api.github.com/users/Hail91")
+const followersArray = ['AndrewMaddocks', 'vtellez1', 'ackers93', 'KaiHaskell', 'bamfranceschi'];
+followersArray.forEach(users => {
+  axios.get(`https://api.github.com/users/${users}`)
   .then(res => {
-      
-  });
+    const otherCards = gitInfo(res);
+    const newCards = document.querySelector('.cards');
+    newCards.appendChild(otherCards);
+    gitInfo(res);
+  })
+  .catch(err => {
+    console.log('Error in data!', err);
+  })
+})
+  
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
